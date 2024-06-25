@@ -116,6 +116,6 @@ optimizer_small = optim.Adam(model_small.parameters(), lr=3e-4)
 pretrain_model(small_loader, model_small, optimizer_small, 20, 'simclr_resnet18_small.pth', 'runs/small')
 
 # 预训练大规模数据集模型
-# model_full = SimCLR(resnet18, 128).cuda()
-# optimizer_full = optim.Adam(model_full.parameters(), lr=3e-4)
-# pretrain_model(full_loader, model_full, optimizer_full, 20, 'simclr_resnet18_full.pth', 'runs/full')
+model_full = SimCLR(resnet18, 128).cuda()
+optimizer_full = optim.Adam(model_full.parameters(), lr=3e-4)
+pretrain_model(full_loader, model_full, optimizer_full, 20, 'simclr_resnet18_full.pth', 'runs/full')
