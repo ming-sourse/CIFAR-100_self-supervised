@@ -94,22 +94,22 @@ def test(model, test_loader, criterion, epoch, writer):
     writer.add_scalar('Accuracy/test', acc, epoch)
     print(f'Test Epoch: {epoch}, Loss: {avg_loss}, Accuracy: {acc}%')
 
-# # 使用小规模预训练模型进行线性分类评测
-# model_small_classifier = LinearClassifier(resnet18, 100)
-# model_small_classifier.backbone.load_state_dict(torch.load('simclr_resnet18_small.pth'), strict=False)
-# model_small_classifier = model_small_classifier.cuda()
+# 使用小规模预训练模型进行线性分类评测
+model_small_classifier = LinearClassifier(resnet18, 100)
+model_small_classifier.backbone.load_state_dict(torch.load('simclr_resnet18_small.pth'), strict=False)
+model_small_classifier = model_small_classifier.cuda()
 
-# # 定义损失函数和优化器
-# criterion = nn.CrossEntropyLoss()
-# optimizer = optim.Adam(model_small_classifier.fc.parameters(), lr=1e-3)
+# 定义损失函数和优化器
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model_small_classifier.fc.parameters(), lr=1e-3)
 
-# # 训练和评测
-# writer = SummaryWriter('runs/linear_small')
-# num_epochs = 50
-# for epoch in range(num_epochs):
-#     train(model_small_classifier, train_loader, criterion, optimizer, epoch, writer)
-#     test(model_small_classifier, test_loader, criterion, epoch, writer)
-# writer.close()
+# 训练和评测
+writer = SummaryWriter('runs/linear_small')
+num_epochs = 50
+for epoch in range(num_epochs):
+    train(model_small_classifier, train_loader, criterion, optimizer, epoch, writer)
+    test(model_small_classifier, test_loader, criterion, epoch, writer)
+writer.close()
 
 # 使用大规模预训练模型进行线性分类评测
 model_full_classifier = LinearClassifier(resnet18, 100)
